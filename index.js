@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const startClassBtn = document.getElementById("start-class-btn");
     const loadingIndicator = document.createElement("div");
     loadingIndicator.id = "loading-indicator";
-    loadingIndicator.textContent = "Loading...";
+    // loadingIndicator.textContent = "Loading..."; // Remove or comment out this line
     loadingIndicator.style.display = "none"; // Initially hidden
     document.body.appendChild(loadingIndicator);
 
