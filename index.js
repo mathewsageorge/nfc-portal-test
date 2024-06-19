@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 fullName = teacherName; // Use the teacher name as is if not found in the switch case
         }
 
-        let password = prompt(`Enter password for ${fullName}:`);
+        let password = prompt(`Enter password for ${fullName} to take attendance using NFC`);
         let correctPassword = false;
 
         switch (teacherName) {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (!correctPassword) {
-            alert("Incorrect password. Please enter the correct password for the selected teacher.");
+            alert(`Incorrect password for ${fullName}. Please enter the correct password for ${fullName}.`);
             $teacher.value = ""; // Reset the selected teacher
             subjectSelect.style.display = "none"; // Hide subject dropdown
         } else {
