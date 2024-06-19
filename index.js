@@ -69,6 +69,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const classIdentifier = $subject.value.slice(-2); // Extract last two characters as class identifier
 
+            let password = prompt("Enter password to confirm:");
+            let correctPassword = false;
+
+            switch ($teacher.value) {
+                case 'JINI':
+                    correctPassword = password === '11';
+                    break;
+                case 'ANITHA':
+                    correctPassword = password === '22';
+                    break;
+                case 'NIMITHA':
+                    correctPassword = password === '33';
+                    break;
+                default:
+                    correctPassword = true; // No password required for other teachers
+            }
+
+            if (!correctPassword) {
+                alert("Incorrect password. Class not started.");
+                return;
+            }
+
             if (confirm("Are you sure you want to start the class for " + $subject.value + "?")) {
                 loadingIndicator.style.display = "block"; // Show loading indicator
                 try {
