@@ -65,10 +65,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add event listener to teacher select dropdown
     $teacher.addEventListener("change", () => {
-        let password = prompt("Enter password to confirm:");
+        let teacherName = $teacher.value;
+        let fullName = "";
+
+        switch (teacherName) {
+            case 'JINI':
+                fullName = "Jini George";
+                break;
+            case 'ANITHA':
+                fullName = "Anitha Jose";
+                break;
+            case 'NIMITHA':
+                fullName = "Nimitha Mary Mohan";
+                break;
+            default:
+                fullName = teacherName; // Use the teacher name as is if not found in the switch case
+        }
+
+        let password = prompt(`Enter password for ${fullName}:`);
         let correctPassword = false;
 
-        switch ($teacher.value) {
+        switch (teacherName) {
             case 'JINI':
                 correctPassword = password === '11';
                 break;
