@@ -60,6 +60,9 @@ document.addEventListener('DOMContentLoaded', function () {
     loadingIndicator.style.display = "none"; // Initially hidden
     document.body.appendChild(loadingIndicator);
 
+    const $teacher = document.getElementById('teacher');
+    const $subject = document.getElementById('subject');
+
     // Add event listener to teacher select dropdown
     $teacher.addEventListener("change", () => {
         let password = prompt("Enter password to confirm:");
@@ -82,8 +85,45 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!correctPassword) {
             alert("Incorrect password. Please enter the correct password for the selected teacher.");
             $teacher.value = ""; // Reset the selected teacher
+            return;
         }
+
+        // Update subject options based on the selected teacher
+        filterSubjects();
     });
+
+    function filterSubjects() {
+        const teacherSelect = document.getElementById('teacher');
+        const subjectSelect = document.getElementById('subject');
+        const selectedTeacher = teacherSelect.value;
+
+        // Define which subjects each teacher teaches
+        const subjectsByTeacher = {
+            'JINI': ['CGIPS6', 'DESIGNS4'], // Corrected teacher values and subjects
+            'ANITHA': ['AADS6', 'OSS4'], // Example subjects for ANITHA MISS
+            'NIMITHA': ['IEFTS6', 'COAS4'] // Example subjects for NIMITHA MISS
+        };
+
+        // Clear current subjects
+        subjectSelect.innerHTML = '';
+
+        // Check if a teacher is selected and password is correct
+        if (selectedTeacher && correctPassword) {
+            // Get subjects for the selected teacher and create new options
+            const subjects = subjectsByTeacher[selectedTeacher] || [];
+            subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject;
+                option.textContent = subject;
+                subjectSelect.appendChild(option);
+            });
+        } else {
+            // If no teacher is selected or password is incorrect, add a default 'Select Subject' option
+            const defaultOption = document.createElement('option');
+            defaultOption.textContent = 'Select Subject';
+            subjectSelect.appendChild(defaultOption);
+        }
+    }
 
     if (startClassBtn) {
         startClassBtn.addEventListener("click", async () => {
@@ -131,39 +171,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.appendChild($nfcTapCountDisplay);
     updateNfcTapCount(); // Initial display update
 });
-
-function filterSubjects() {
-    const teacherSelect = document.getElementById('teacher');
-    const subjectSelect = document.getElementById('subject');
-    const selectedTeacher = teacherSelect.value;
-
-    // Define which subjects each teacher teaches
-    const subjectsByTeacher = {
-        'JINI': ['CGIPS6', 'DESIGNS4'], // Corrected teacher values and subjects
-        'ANITHA': ['AADS6', 'OSS4'], // Example subjects for ANITHA MISS
-        'NIMITHA': ['IEFTS6', 'COAS4'] // Example subjects for NIMITHA MISS
-    };
-
-    // Clear current subjects
-    subjectSelect.innerHTML = '';
-
-    // Check if a teacher is selected
-    if (selectedTeacher) {
-        // Get subjects for the selected teacher and create new options
-        const subjects = subjectsByTeacher[selectedTeacher] || [];
-        subjects.forEach(subject => {
-            const option = document.createElement('option');
-            option.value = subject;
-            option.textContent = subject;
-            subjectSelect.appendChild(option);
-        });
-    } else {
-        // If no teacher is selected, add a default 'Select Subject' option
-        const defaultOption = document.createElement('option');
-        defaultOption.textContent = 'Select Subject';
-        subjectSelect.appendChild(defaultOption);
-    }
-}
 
 if (!window.NDEFReader) {
     $status.innerHTML = "<h4>NFC Unsupported!</h4>";
