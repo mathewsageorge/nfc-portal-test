@@ -60,6 +60,31 @@ document.addEventListener('DOMContentLoaded', function () {
     loadingIndicator.style.display = "none"; // Initially hidden
     document.body.appendChild(loadingIndicator);
 
+    // Add event listener to teacher select dropdown
+    $teacher.addEventListener("change", () => {
+        let password = prompt("Enter password to confirm:");
+        let correctPassword = false;
+
+        switch ($teacher.value) {
+            case 'JINI':
+                correctPassword = password === '11';
+                break;
+            case 'ANITHA':
+                correctPassword = password === '22';
+                break;
+            case 'NIMITHA':
+                correctPassword = password === '33';
+                break;
+            default:
+                correctPassword = true; // No password required for other teachers
+        }
+
+        if (!correctPassword) {
+            alert("Incorrect password. Please enter the correct password for the selected teacher.");
+            $teacher.value = ""; // Reset the selected teacher
+        }
+    });
+
     if (startClassBtn) {
         startClassBtn.addEventListener("click", async () => {
             if (!$teacher.value) {
@@ -68,28 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const classIdentifier = $subject.value.slice(-2); // Extract last two characters as class identifier
-
-            let password = prompt("Enter password to confirm:");
-            let correctPassword = false;
-
-            switch ($teacher.value) {
-                case 'JINI':
-                    correctPassword = password === '11';
-                    break;
-                case 'ANITHA':
-                    correctPassword = password === '22';
-                    break;
-                case 'NIMITHA':
-                    correctPassword = password === '33';
-                    break;
-                default:
-                    correctPassword = true; // No password required for other teachers
-            }
-
-            if (!correctPassword) {
-                alert("Incorrect password. Class not started.");
-                return;
-            }
 
             if (confirm("Are you sure you want to start the class for " + $subject.value + "?")) {
                 loadingIndicator.style.display = "block"; // Show loading indicator
