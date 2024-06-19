@@ -155,16 +155,6 @@ app.post('/start-class', async (req, res) => {
                 const emailText = `Dear ${serialEmails[serial].name},\n\nAlert From NFCAMS: You were marked absent for ${subject} on ${currentDate}, during ${period}.`;
                 await sendEmail(serialEmails[serial].email, "NFCAMS-Absence Notification", emailText);
                 absenteesNotified++;
-
-                // Save absentee details to the database
-                const absenteeRecord = new recordModel({
-                    serialNumber: serial,
-                    logData: "Absent",
-                    time: currentDate,
-                    period: period,
-                    subject: subject,
-                });
-                await absenteeRecord.save();
             }
         }));
 
